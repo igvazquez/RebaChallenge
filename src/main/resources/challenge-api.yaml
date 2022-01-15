@@ -1,0 +1,43 @@
+openapi: 3.0.0
+
+info:
+  version: 0.0.1
+  title: Reba Challenge
+  description: Interview challenge for "Java fullstack developer" position at Reba
+
+tags:
+  - name: "Persons"
+
+paths:
+  /api/persons:
+    get:
+      summary: gets all persons
+      tags:
+        - "Persons"
+      description: Gets all persons
+      operationId: getAllPersons
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Person'
+
+components:
+  schemas:
+    Person:
+      description: persona
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        birthdate:
+          type: string
+        dni:
+          type: integer
+
