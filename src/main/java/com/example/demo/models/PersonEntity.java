@@ -1,34 +1,38 @@
 package com.example.demo.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "persons")
+@Data
+@Builder
+@AllArgsConstructor
 public class PersonEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "persons_person_id_seq")
     @SequenceGenerator(allocationSize = 1, sequenceName = "persons_person_id_seq", name = "persons_person_id_seq")
     @Column(name = "person_id")
-    private Integer id;
+    private Long id;
 
     @Column(length = 100, nullable = false)
     private String name;
 
-    @Column(name = "birthdate", nullable = false)
-    @Basic(optional = false)
+    @Column(nullable = false)
     private LocalDateTime birthdate;
 
-    public Integer getId() {
-        return id;
-    }
+    @Column(name = "residence_country", nullable = false)
+    private String residenceCountry;
 
-    public String getName() {
-        return name;
-    }
+    @OneToOne(optional = false, fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "document_id")
+    private DocumentEntity document;
 
-    public LocalDateTime getBirthdate() {
-        return birthdate;
+    protected PersonEntity() {
+        //
     }
 }

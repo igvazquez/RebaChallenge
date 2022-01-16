@@ -3,23 +3,22 @@ package com.example.demo.controllers;
 import com.example.demo.api.PersonsApi;
 import com.example.demo.converters.PersonsConverter;
 import com.example.demo.models.Person;
-import com.example.demo.services.PersonsServiceImpl;
+import com.example.demo.models.exceptions.PersonNotExistsException;
+import com.example.demo.services.PersonsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PersonsController implements PersonsApi {
 
-    private final PersonsServiceImpl personsService;
-
-    @Autowired
-    public PersonsController(PersonsServiceImpl personsService) {
-        this.personsService = personsService;
-    }
+    private final PersonsService personsService;
 
     @Override
     public ResponseEntity<List<Person>> getAllPersons() {
@@ -27,5 +26,41 @@ public class PersonsController implements PersonsApi {
 
         return ResponseEntity.ok(persons.stream().map(PersonsConverter::convertToPersonDto)
                 .collect(Collectors.toList()));
+    }
+
+    @Override
+    public ResponseEntity<Person> postPerson(final Person body) {
+        var person = personsService.postPerson(PersonsConverter.convertToEntity(body));
+
+        return ResponseEntity.created(URI.create("/persons/" + person.getId())).body(body);
+    }
+
+    @Override
+    public ResponseEntity<Void> deletePersonById(final Long userId) {
+
+        try{
+            personsService.deletePersonById(userId);
+        }catch (PersonNotExistsException e){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<Person> getPersonById(final Long userId) {
+        var person = personsService.getPersonById(userId)
+                .map(PersonsConverter::convertToPersonDto);
+
+        return person
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.noContent().build());
+    }
+
+    @Override
+    public ResponseEntity<Person> updatePersonById(final Long userId, final Person body) {
+        var person = personsService.updatePersonById(userId,
+                PersonsConverter.convertToEntity(body));
+        return ResponseEntity.ok(PersonsConverter.convertToPersonDto(person));
     }
 }

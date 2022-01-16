@@ -25,19 +25,102 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Person'
+    post:
+      requestBody:
+        description: Person to be added
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Person'
+      summary: Adds a persons
+      tags:
+        - "Persons"
+      description: Adds a persons
+      operationId: postPerson
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+  /api/persons/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        description: the person identifier, as userId
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: gets person by id
+      tags:
+        - "Persons"
+      description: Gets a person by it's id
+      operationId: getPersonById
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
+    delete:
+      summary: delete person by id
+      tags:
+        - "Persons"
+      description: Performs a logic delete of a person by it's id
+      operationId: deletePersonById
+      responses:
+        "204":
+          description: No Content
+    put:
+      summary: update person by id
+      tags:
+        - "Persons"
+      description: Updates a person by it's id
+      operationId: updatePersonById
+      requestBody:
+        description: Put payload
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/Person'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Person'
 
 components:
   schemas:
     Person:
-      description: persona
+      description: Person DTO
       type: object
       properties:
         id:
           type: integer
+          format: int64
         name:
           type: string
         birthdate:
           type: string
-        dni:
+        residence-country:
+          type: string
+        document:
+          $ref: '#/components/schemas/Document'
+    Document:
+      description: Document DTO
+      type: object
+      properties:
+        id:
           type: integer
+          format: int64
+        type:
+          type: string
+        document:
+          type: string
 
