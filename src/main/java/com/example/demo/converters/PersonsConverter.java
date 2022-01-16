@@ -17,7 +17,6 @@ public final class PersonsConverter {
                 .id(person.getId())
                 .name(person.getName())
                 .birthdate(person.getBirthdate().toString())
-                .residenceCountry(person.getResidenceCountry())
                 .document(DocumentConverter.convertToDocumentDto(person.getDocument()));
     }
 
@@ -26,7 +25,6 @@ public final class PersonsConverter {
                 .id(person.getId())
                 .name(person.getName())
                 .birthdate(LocalDateTime.parse(person.getBirthdate()))
-                .residenceCountry(person.getResidenceCountry())
                 .document(DocumentConverter.convertToDocumentEntity(person.getDocument()))
                 .build();
     }

@@ -14,7 +14,8 @@ public final class DocumentConverter {
         return new Document()
                 .id(document.getId())
                 .type(document.getType())
-                .document(document.getDocument());
+                .document(document.getDocument())
+                .residenceCountry(document.getResidenceCountry());
     }
 
     public static DocumentEntity convertToDocumentEntity(final Document document) {
@@ -22,6 +23,7 @@ public final class DocumentConverter {
                 .id(document.getId())
                 .type(document.getType())
                 .document(document.getDocument())
+                .residenceCountry(document.getResidenceCountry())
                 .build();
     }
 }

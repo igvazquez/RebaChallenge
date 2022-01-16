@@ -25,9 +25,6 @@ public class PersonEntity {
     @Column(nullable = false)
     private LocalDateTime birthdate;
 
-    @Column(name = "residence_country", nullable = false)
-    private String residenceCountry;
-
     @OneToOne(optional = false, fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "document_id")
     private DocumentEntity document;

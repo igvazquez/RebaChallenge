@@ -37,7 +37,6 @@ class PersonsServiceImplTest {
                 .id(1L)
                 .name("Ignacio")
                 .birthdate(LocalDateTime.of(1998,19,12,12,12).toString())
-                .residenceCountry("Argentina")
                 .document(getFakeDocument());
     }
 
@@ -45,7 +44,8 @@ class PersonsServiceImplTest {
         return new Document()
                 .id(1L)
                 .type("DNI")
-                .document("21123123");
+                .document("21123123")
+                .residenceCountry("Argentina");
     }
 
     PersonEntity getFakePersonEntity(){
@@ -53,7 +53,6 @@ class PersonsServiceImplTest {
                 .id(1L)
                 .name("Ignacio")
                 .birthdate(LocalDateTime.of(1998,12,19,12,12))
-                .residenceCountry("Argentina")
                 .document(getFakeDocumentEntity())
                 .build();
     }
@@ -63,6 +62,7 @@ class PersonsServiceImplTest {
                 .id(1L)
                 .type("DNI")
                 .document("21123123")
+                .residenceCountry("Argentina")
                 .build();
     }
 

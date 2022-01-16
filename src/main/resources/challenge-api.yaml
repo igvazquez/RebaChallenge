@@ -7,6 +7,7 @@ info:
 
 tags:
   - name: "Persons"
+  - name: "Documents"
 
 paths:
   /api/persons:
@@ -94,7 +95,66 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Person'
-
+  /api/persons/{userId}/document:
+    parameters:
+      - name: userId
+        in: path
+        required: true
+        description: the person identifier, as userId
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: gets document by userId
+      tags:
+        - "Persons"
+      description: Gets a document by userIid
+      operationId: getDocumentByUserId
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+  /api/documents:
+    get:
+      summary: gets all documents
+      tags:
+        - "Documents"
+      description: Gets all Documents
+      operationId: getDocuments
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+  /api/documents/{documentId}:
+    parameters:
+      - name: documentId
+        in: path
+        required: true
+        description: the document identifier, as documentId
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: gets document by documentId
+      tags:
+        - "Documents"
+      description: Gets a document by it's document id
+      operationId: getDocumentById
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
 components:
   schemas:
     Person:
@@ -107,8 +167,6 @@ components:
         name:
           type: string
         birthdate:
-          type: string
-        residence-country:
           type: string
         document:
           $ref: '#/components/schemas/Document'
@@ -123,4 +181,5 @@ components:
           type: string
         document:
           type: string
-
+        residence-country:
+          type: string

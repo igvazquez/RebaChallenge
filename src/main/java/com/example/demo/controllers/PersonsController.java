@@ -1,9 +1,12 @@
 package com.example.demo.controllers;
 
 import com.example.demo.api.PersonsApi;
+import com.example.demo.converters.DocumentConverter;
 import com.example.demo.converters.PersonsConverter;
+import com.example.demo.models.Document;
 import com.example.demo.models.Person;
 import com.example.demo.models.exceptions.PersonNotExistsException;
+import com.example.demo.services.DocumentService;
 import com.example.demo.services.PersonsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import java.util.stream.Collectors;
 public class PersonsController implements PersonsApi {
 
     private final PersonsService personsService;
+    private final DocumentService documentService;
 
     @Override
     public ResponseEntity<List<Person>> getAllPersons() {
@@ -54,7 +58,7 @@ public class PersonsController implements PersonsApi {
 
         return person
                 .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.noContent().build());
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @Override
@@ -62,5 +66,15 @@ public class PersonsController implements PersonsApi {
         var person = personsService.updatePersonById(userId,
                 PersonsConverter.convertToEntity(body));
         return ResponseEntity.ok(PersonsConverter.convertToPersonDto(person));
+    }
+
+    @Override
+    public ResponseEntity<Document> getDocumentByUserId(Long userId) {
+        var document = documentService.getDocumentByUserId(userId)
+                .map(DocumentConverter::convertToDocumentDto);
+
+        return document
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

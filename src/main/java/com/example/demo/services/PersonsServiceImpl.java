@@ -70,7 +70,7 @@ public class PersonsServiceImpl implements PersonsService {
         }
 
         if (personExists(person)){
-            throw new DuplicatePersonException();
+            throw new DuplicatePersonException(person);
         }
 
         return personsRepository.save(person);
@@ -84,7 +84,7 @@ public class PersonsServiceImpl implements PersonsService {
     public boolean personExists(final PersonEntity person) {
         return personsRepository
                 .findByResidenceCountryAndDocumentTypeAndAndDocument(
-                        person.getResidenceCountry(),
+                        person.getDocument().getResidenceCountry(),
                         person.getDocument().getType(),
                         person.getDocument().getDocument())
                 .isPresent();

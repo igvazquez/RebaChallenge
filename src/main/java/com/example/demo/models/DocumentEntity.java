@@ -25,6 +25,9 @@ public class DocumentEntity {
     @Column(length = 25, nullable = false)
     private String document;
 
+    @Column(name = "residence_country", nullable = false)
+    private String residenceCountry;
+
     protected DocumentEntity() {
         //
     }
