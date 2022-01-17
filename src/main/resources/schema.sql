@@ -13,3 +13,11 @@ CREATE TABLE IF NOT EXISTS persons(
     document_id       integer,
     foreign key (document_id) references documents
 );
+
+CREATE TABLE IF NOT EXISTS parents(
+    parent_id integer,
+    child_id integer,
+    foreign key (parent_id) references persons,
+    foreign key (child_id) references persons,
+    unique (parent_id, child_id)
+);

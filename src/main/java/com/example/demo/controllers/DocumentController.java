@@ -2,10 +2,8 @@ package com.example.demo.controllers;
 
 import com.example.demo.api.DocumentsApi;
 import com.example.demo.converters.DocumentConverter;
-import com.example.demo.converters.PersonsConverter;
 import com.example.demo.models.Document;
-import com.example.demo.services.DocumentService;
-import com.example.demo.services.DocumentServiceImpl;
+import com.example.demo.services.interfaces.DocumentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -5,6 +5,7 @@ import com.example.demo.models.exceptions.DuplicatePersonException;
 import com.example.demo.models.exceptions.IllegalAgeException;
 import com.example.demo.models.exceptions.PersonNotExistsException;
 import com.example.demo.repositories.PersonsRepository;
+import com.example.demo.services.interfaces.PersonsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;

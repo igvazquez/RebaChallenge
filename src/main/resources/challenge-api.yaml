@@ -10,7 +10,7 @@ tags:
   - name: "Documents"
 
 paths:
-  /api/persons:
+  /api/personas:
     get:
       summary: gets all persons
       tags:
@@ -45,7 +45,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Person'
-  /api/persons/{userId}:
+  /api/personas/{userId}:
     parameters:
       - name: userId
         in: path
@@ -95,7 +95,32 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Person'
-  /api/persons/{userId}/document:
+  /api/personas/{parentId}/padre/{childId}:
+    parameters:
+      - in: path
+        name: parentId
+        required: true
+        description: the parent identifier, as parentId
+        schema:
+          type: integer
+          format: int64
+      - in: path
+        name: childId
+        required: true
+        description: the child identifier, as childId
+        schema:
+          type: integer
+          format: int64
+    post:
+      summary: sets parentId as a parent of childId
+      tags:
+        - "Persons"
+      description: Sets a parent relation between two persons
+      operationId: setParentRelation
+      responses:
+        "201":
+          description: Created
+  /api/personas/{userId}/document:
     parameters:
       - name: userId
         in: path

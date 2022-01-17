@@ -6,8 +6,9 @@ import com.example.demo.converters.PersonsConverter;
 import com.example.demo.models.Document;
 import com.example.demo.models.Person;
 import com.example.demo.models.exceptions.PersonNotExistsException;
-import com.example.demo.services.DocumentService;
-import com.example.demo.services.PersonsService;
+import com.example.demo.services.interfaces.DocumentService;
+import com.example.demo.services.interfaces.PersonsService;
+import com.example.demo.services.interfaces.RelationshipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class PersonsController implements PersonsApi {
 
     private final PersonsService personsService;
     private final DocumentService documentService;
+    private final RelationshipService relationshipService;
 
     @Override
     public ResponseEntity<List<Person>> getAllPersons() {
@@ -76,5 +78,12 @@ public class PersonsController implements PersonsApi {
         return document
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @Override
+    public ResponseEntity<Void> setParentRelation(final Long parentId, final Long childId) {
+        relationshipService.setParentRelation(parentId, childId);
+
+        return ResponseEntity.created(URI.create("/personas/"+parentId+"/padre"+childId)).build();
     }
 }

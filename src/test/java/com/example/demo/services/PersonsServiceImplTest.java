@@ -7,10 +7,10 @@ import com.example.demo.models.PersonEntity;
 import com.example.demo.models.exceptions.DuplicatePersonException;
 import com.example.demo.models.exceptions.IllegalAgeException;
 import com.example.demo.repositories.PersonsRepository;
+import com.example.demo.services.interfaces.PersonsService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
 import java.util.List;

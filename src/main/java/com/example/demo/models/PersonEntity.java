@@ -29,6 +29,15 @@ public class PersonEntity {
     @JoinColumn(name = "document_id")
     private DocumentEntity document;
 
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "child")
+    private PersonEntity parent;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinTable(name = "parents",
+            joinColumns = @JoinColumn(name = "parent_id"),
+            inverseJoinColumns = @JoinColumn(name = "child_id"))
+    private PersonEntity child;
+
     protected PersonEntity() {
         //
     }
