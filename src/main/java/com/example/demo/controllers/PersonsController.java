@@ -4,6 +4,7 @@ import com.example.demo.api.PersonsApi;
 import com.example.demo.converters.DocumentConverter;
 import com.example.demo.converters.PersonsConverter;
 import com.example.demo.models.Document;
+import com.example.demo.models.ParentRelation;
 import com.example.demo.models.Person;
 import com.example.demo.models.exceptions.PersonNotExistsException;
 import com.example.demo.services.interfaces.DocumentService;
@@ -85,5 +86,22 @@ public class PersonsController implements PersonsApi {
         relationshipService.setParentRelation(parentId, childId);
 
         return ResponseEntity.created(URI.create("/personas/"+parentId+"/padre"+childId)).build();
+    }
+
+    @Override
+    public ResponseEntity<ParentRelation> getParentRelation(final Long userId) {
+        var parent = personsService.getPersonById(userId);
+
+        return parent.map(p -> {
+            var relation = relationshipService.getChildren(userId)
+                    .stream().map(PersonsConverter::convertToPersonDto)
+                    .collect(Collectors.toList());
+
+            var parentRelation = new ParentRelation()
+                    .parent(PersonsConverter.convertToPersonDto(p))
+                    .children(relation);
+
+            return ResponseEntity.ok(parentRelation);
+        }).orElse(ResponseEntity.notFound().build());
     }
 }

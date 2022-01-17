@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "persons")
@@ -29,16 +30,32 @@ public class PersonEntity {
     @JoinColumn(name = "document_id")
     private DocumentEntity document;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "child")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "parents",
+            joinColumns = @JoinColumn(name = "child_id"),
+            inverseJoinColumns = @JoinColumn(name = "parent_id"))
     private PersonEntity parent;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "parents",
-            joinColumns = @JoinColumn(name = "parent_id"),
-            inverseJoinColumns = @JoinColumn(name = "child_id"))
-    private PersonEntity child;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = CascadeType.ALL)
+    private List<PersonEntity> children;
 
     protected PersonEntity() {
         //
+    }
+
+    public boolean isParentOf(final PersonEntity p){
+        return p.getParent() != null && p.getParent().equals(this);
+    }
+
+    public boolean isSiblingOf(final PersonEntity p){
+        return p.getParent() != null && p.getParent().equals(parent);
+    }
+
+    public void addChild(final PersonEntity c) {
+        if (children == null){
+            children = List.of(c);
+        }else {
+            children.add(c);
+        }
     }
 }

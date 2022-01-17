@@ -45,6 +45,7 @@ public class PersonsServiceImpl implements PersonsService {
     }
 
     @Override
+    @Transactional
     public PersonEntity updatePersonById(final Long userId, final PersonEntity person) {
         var oldPerson = personsRepository.findById(userId);
 

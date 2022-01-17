@@ -120,6 +120,28 @@ paths:
       responses:
         "201":
           description: Created
+  /api/personas/{userId}/hijos:
+    parameters:
+      - in: path
+        name: userId
+        required: true
+        description: the parent identifie, as userId
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: gets parent and children
+      tags:
+        - "Persons"
+      description: Gets Parent and it's Children
+      operationId: getParentRelation
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParentRelation'
   /api/personas/{userId}/document:
     parameters:
       - name: userId
@@ -208,3 +230,13 @@ components:
           type: string
         residence-country:
           type: string
+    ParentRelation:
+      description: Parent and it's children
+      type: object
+      properties:
+        parent:
+          $ref: '#/components/schemas/Person'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Person'
