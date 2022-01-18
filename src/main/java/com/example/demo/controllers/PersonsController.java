@@ -3,9 +3,7 @@ package com.example.demo.controllers;
 import com.example.demo.api.PersonsApi;
 import com.example.demo.converters.DocumentConverter;
 import com.example.demo.converters.PersonsConverter;
-import com.example.demo.models.Document;
-import com.example.demo.models.ParentRelation;
-import com.example.demo.models.Person;
+import com.example.demo.models.*;
 import com.example.demo.models.exceptions.PersonNotExistsException;
 import com.example.demo.services.interfaces.DocumentService;
 import com.example.demo.services.interfaces.PersonsService;
@@ -103,5 +101,17 @@ public class PersonsController implements PersonsApi {
 
             return ResponseEntity.ok(parentRelation);
         }).orElse(ResponseEntity.notFound().build());
+    }
+
+    @Override
+    public ResponseEntity<RelativeRelationDTO> getRelationBetween(final Long userId1, final Long userId2) {
+        var rel = relationshipService.getRelationBetween(userId1, userId2);
+
+        var relation = new RelativeRelationDTO()
+                .person1(PersonsConverter.convertToPersonDto(rel.getPerson1()))
+                .person2(PersonsConverter.convertToPersonDto(rel.getPerson2()))
+                .relation(rel.getRelation());
+
+        return ResponseEntity.ok(relation);
     }
 }

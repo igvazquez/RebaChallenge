@@ -58,4 +58,26 @@ public class PersonEntity {
             children.add(c);
         }
     }
+
+    public boolean isCousinOf(final PersonEntity p) {
+        return parent != null &&
+                parent.getParent() != null &&
+                p.getParent() != null &&
+                p.getParent().getParent() != null
+                && p.getParent().getParent().equals(parent.getParent());
+    }
+
+    public boolean isUncleOf(final PersonEntity p) {
+        return parent != null &&
+                p.getParent() != null &&
+                p.getParent().getParent() != null &&
+                parent.equals(p.getParent().getParent());
+    }
+
+    public boolean isNephewOf(final PersonEntity p) {
+        return parent != null &&
+                parent.getParent() != null &&
+                p.getParent() != null &&
+                p.getParent().equals(parent.getParent());
+    }
 }

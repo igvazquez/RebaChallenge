@@ -40,7 +40,7 @@ public class PersonsServiceImpl implements PersonsService {
         try{
             personsRepository.deleteById(userId);
         }catch (EmptyResultDataAccessException e){
-            throw new PersonNotExistsException("Person with id "+ userId + " doesn't exists");
+            throw new PersonNotExistsException(userId);
         }
     }
 

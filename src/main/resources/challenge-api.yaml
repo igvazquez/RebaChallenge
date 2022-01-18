@@ -202,6 +202,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Document'
+  /api/relaciones/{userId1}/{userId2}:
+    parameters:
+      - in: path
+        name: userId1
+        required: true
+        description: the first user identifier, as userId1
+        schema:
+          type: integer
+          format: int64
+      - in: path
+        name: userId2
+        required: true
+        description: the second user identifier, as userId2
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: relation of the two users
+      tags:
+        - "Persons"
+      description: Returns the relation of the two users
+      operationId: getRelationBetween
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RelativeRelationDTO'
 components:
   schemas:
     Person:
@@ -240,3 +269,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Person'
+    RelativeRelationDTO:
+      description: the two persons and it's relation
+      type: object
+      properties:
+        person1:
+          $ref: '#/components/schemas/Person'
+        person2:
+          $ref: '#/components/schemas/Person'
+        relation:
+          type: string
