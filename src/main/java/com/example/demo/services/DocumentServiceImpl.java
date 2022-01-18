@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.models.DocumentEntity;
 import com.example.demo.repositories.DocumentsRepository;
+import com.example.demo.services.interfaces.DocumentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class DocumentServiceImpl implements DocumentService{
+public class DocumentServiceImpl implements DocumentService {
 
     private final DocumentsRepository documentsRepository;
 

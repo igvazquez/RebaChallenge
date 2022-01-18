@@ -20,6 +20,23 @@ public final class PersonsConverter {
                 .document(DocumentConverter.convertToDocumentDto(person.getDocument()));
     }
 
+//    public static Person convertToFullPersonDto(final PersonEntity person){
+//        var p = new Person()
+//                .id(person.getId())
+//                .name(person.getName())
+//                .birthdate(person.getBirthdate().toString())
+//                .document(DocumentConverter.convertToDocumentDto(person.getDocument()));
+//
+//        if (person.getParent() != null){
+//            p.setParent(convertToPersonDto(person.getParent()));
+//        }
+//        if (person.getChild() != null){
+//            p.setChild(convertToPersonDto(person.getChild()));
+//        }
+//
+//        return p;
+//    }
+
     public static PersonEntity convertToEntity(final Person person) {
         return PersonEntity.builder()
                 .id(person.getId())

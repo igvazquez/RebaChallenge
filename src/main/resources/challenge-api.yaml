@@ -10,7 +10,7 @@ tags:
   - name: "Documents"
 
 paths:
-  /api/persons:
+  /api/personas:
     get:
       summary: gets all persons
       tags:
@@ -45,7 +45,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Person'
-  /api/persons/{userId}:
+  /api/personas/{userId}:
     parameters:
       - name: userId
         in: path
@@ -95,7 +95,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Person'
-  /api/persons/{userId}/document:
+  /api/personas/{parentId}/padre/{childId}:
+    parameters:
+      - in: path
+        name: parentId
+        required: true
+        description: the parent identifier, as parentId
+        schema:
+          type: integer
+          format: int64
+      - in: path
+        name: childId
+        required: true
+        description: the child identifier, as childId
+        schema:
+          type: integer
+          format: int64
+    post:
+      summary: sets parentId as a parent of childId
+      tags:
+        - "Persons"
+      description: Sets a parent relation between two persons
+      operationId: setParentRelation
+      responses:
+        "201":
+          description: Created
+  /api/personas/{userId}/hijos:
+    parameters:
+      - in: path
+        name: userId
+        required: true
+        description: the parent identifie, as userId
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: gets parent and children
+      tags:
+        - "Persons"
+      description: Gets Parent and it's Children
+      operationId: getParentRelation
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParentRelation'
+  /api/personas/{userId}/document:
     parameters:
       - name: userId
         in: path
@@ -155,6 +202,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Document'
+  /api/relaciones/{userId1}/{userId2}:
+    parameters:
+      - in: path
+        name: userId1
+        required: true
+        description: the first user identifier, as userId1
+        schema:
+          type: integer
+          format: int64
+      - in: path
+        name: userId2
+        required: true
+        description: the second user identifier, as userId2
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: relation of the two users
+      tags:
+        - "Persons"
+      description: Returns the relation of the two users
+      operationId: getRelationBetween
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RelativeRelationDTO'
 components:
   schemas:
     Person:
@@ -182,4 +258,24 @@ components:
         document:
           type: string
         residence-country:
+          type: string
+    ParentRelation:
+      description: Parent and it's children
+      type: object
+      properties:
+        parent:
+          $ref: '#/components/schemas/Person'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Person'
+    RelativeRelationDTO:
+      description: the two persons and it's relation
+      type: object
+      properties:
+        person1:
+          $ref: '#/components/schemas/Person'
+        person2:
+          $ref: '#/components/schemas/Person'
+        relation:
           type: string

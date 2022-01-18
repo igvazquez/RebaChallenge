@@ -5,6 +5,7 @@ import com.example.demo.models.exceptions.DuplicatePersonException;
 import com.example.demo.models.exceptions.IllegalAgeException;
 import com.example.demo.models.exceptions.PersonNotExistsException;
 import com.example.demo.repositories.PersonsRepository;
+import com.example.demo.services.interfaces.PersonsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -39,11 +40,12 @@ public class PersonsServiceImpl implements PersonsService {
         try{
             personsRepository.deleteById(userId);
         }catch (EmptyResultDataAccessException e){
-            throw new PersonNotExistsException("Person with id "+ userId + " doesn't exists");
+            throw new PersonNotExistsException(userId);
         }
     }
 
     @Override
+    @Transactional
     public PersonEntity updatePersonById(final Long userId, final PersonEntity person) {
         var oldPerson = personsRepository.findById(userId);
 
