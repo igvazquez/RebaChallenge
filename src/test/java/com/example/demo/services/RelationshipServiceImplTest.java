@@ -58,9 +58,8 @@ class RelationshipServiceImplTest {
 
         relationshipService.setParentRelation(p.getId(), c.getId());
 
-        Assertions.assertNotNull(p.getChildren());
-        Assertions.assertEquals(1, p.getChildren().size());
-        Assertions.assertEquals(c, p.getChildren().get(0));
+        Assertions.assertNotNull(c.getParent());
+        Assertions.assertEquals(p, c.getParent());
     }
 
     @Test
