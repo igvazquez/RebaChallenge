@@ -8,6 +8,7 @@ info:
 tags:
   - name: "Persons"
   - name: "Documents"
+  - name: "Stats"
 
 paths:
   /api/personas:
@@ -231,6 +232,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RelativeRelationDTO'
+  /api/stats:
+    get:
+      summary: gets api stats
+      tags:
+        - "Stats"
+      description: Gets an array of a country and the percentage of users from that country
+      operationId: getStats
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CountryStatsDTO'
 components:
   schemas:
     Person:
@@ -279,3 +296,12 @@ components:
           $ref: '#/components/schemas/Person'
         relation:
           type: string
+    CountryStatsDTO:
+      description: Country name and percetange of users from that country
+      type: object
+      properties:
+        Country:
+          type: string
+        percentage:
+          type: number
+          format: double
