@@ -14,9 +14,10 @@ public interface PersonsRepository extends CrudRepository<PersonEntity, Long> {
 
     List<PersonEntity> findAll();
 
-    @Query(value = "SELECT * FROM persons p inner join documents d on d.document_id = p.document_id " +
-                    "WHERE d.residence_country = :residence_country and d.type = :type " +
-                    "and d.document = :document",
+    @Query(value = "SELECT * FROM persons p INNER JOIN documents d ON d.document_id = p.document_id " +
+                    "LEFT OUTER JOIN parents p2 ON p.person_id = p2.child_id " +
+                    "WHERE d.residence_country = :residence_country AND d.type = :type " +
+                    "AND d.document = :document",
             nativeQuery = true)
     Optional<PersonEntity> findByResidenceCountryAndDocumentTypeAndAndDocument(
             @Param("residence_country") String residenceCountry,

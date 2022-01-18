@@ -68,7 +68,7 @@ public class PersonsServiceImpl implements PersonsService {
     @Transactional
     public PersonEntity postPerson(final PersonEntity person) {
         if (!isValidAge(person)){
-            throw new IllegalAgeException();
+            throw new IllegalAgeException("User must be over " + LEGAL_AGE + " years old");
         }
 
         if (personExists(person)){
