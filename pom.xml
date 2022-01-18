@@ -94,7 +94,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/challenge-api.yaml</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/static/challenge-api.yaml</inputSpec>
                             <language>spring</language>
                             <output>${project.build.directory}/generated-sources/</output>
                             <generateSupportingFiles>false</generateSupportingFiles>
