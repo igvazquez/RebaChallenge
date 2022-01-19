@@ -28,6 +28,11 @@ public class DocumentEntity {
     @Column(name = "residence_country", nullable = false)
     private String residenceCountry;
 
+    @OneToOne(optional = false, fetch = FetchType.LAZY, orphanRemoval = true,
+            cascade = CascadeType.ALL)
+    @JoinColumn(name = "person_id")
+    private PersonEntity person;
+
     protected DocumentEntity() {
         //
     }

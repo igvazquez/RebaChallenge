@@ -37,7 +37,7 @@ public class PersonsController implements PersonsApi {
     public ResponseEntity<Person> postPerson(final Person body) {
         var person = personsService.postPerson(PersonsConverter.convertToEntity(body));
 
-        return ResponseEntity.created(URI.create("/persons/" + person.getId())).body(body);
+        return ResponseEntity.created(URI.create("/personas/" + person.getId())).body(body);
     }
 
     @Override

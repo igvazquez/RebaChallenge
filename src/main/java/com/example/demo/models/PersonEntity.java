@@ -26,9 +26,17 @@ public class PersonEntity {
     @Column(nullable = false)
     private LocalDateTime birthdate;
 
-    @OneToOne(optional = false, fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "document_id")
+    @OneToOne(optional = false, fetch = FetchType.LAZY, orphanRemoval = true,
+            cascade = CascadeType.ALL, mappedBy = "person")
     private DocumentEntity document;
+
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true,
+            cascade = CascadeType.ALL, mappedBy = "person")
+    private PhoneEntity phone;
+
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true,
+            cascade = CascadeType.ALL, mappedBy = "person")
+    private AddressEntity address;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "parents",

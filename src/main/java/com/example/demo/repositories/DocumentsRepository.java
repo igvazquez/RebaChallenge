@@ -12,7 +12,7 @@ public interface DocumentsRepository extends CrudRepository<DocumentEntity, Long
 
     List<DocumentEntity> findAll();
 
-    @Query(value = "SELECT * FROM documents d inner join persons p on d.document_id = p.document_id " +
+    @Query(value = "SELECT * FROM documents d inner join persons p on d.person_id = p.person_id " +
             "WHERE p.person_id = :userId",
             nativeQuery = true)
     Optional<DocumentEntity> findDocumentByUserId(@Param("userId") Long userId);

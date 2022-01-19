@@ -13,36 +13,38 @@ public final class PersonsConverter {
     }
 
     public static Person convertToPersonDto(final PersonEntity person){
-        return new Person()
+        var p = new Person()
                 .id(person.getId())
                 .name(person.getName())
                 .birthdate(person.getBirthdate().toString())
                 .document(DocumentConverter.convertToDocumentDto(person.getDocument()));
+
+        if(person.getAddress() != null){
+            p.address(AddressConverter.convertToAddressDto(person.getAddress()));
+        }
+        if (person.getPhone() != null){
+            p.phone(PhoneConverter.convertToPhoneDto(person.getPhone()));
+        }
+
+        return p;
     }
 
-//    public static Person convertToFullPersonDto(final PersonEntity person){
-//        var p = new Person()
-//                .id(person.getId())
-//                .name(person.getName())
-//                .birthdate(person.getBirthdate().toString())
-//                .document(DocumentConverter.convertToDocumentDto(person.getDocument()));
-//
-//        if (person.getParent() != null){
-//            p.setParent(convertToPersonDto(person.getParent()));
-//        }
-//        if (person.getChild() != null){
-//            p.setChild(convertToPersonDto(person.getChild()));
-//        }
-//
-//        return p;
-//    }
-
     public static PersonEntity convertToEntity(final Person person) {
-        return PersonEntity.builder()
+        var p = PersonEntity.builder()
                 .id(person.getId())
                 .name(person.getName())
                 .birthdate(LocalDateTime.parse(person.getBirthdate()))
-                .document(DocumentConverter.convertToDocumentEntity(person.getDocument()))
                 .build();
+
+        p.setDocument(DocumentConverter.convertToDocumentEntity(person.getDocument(), p));
+
+        if (person.getPhone() != null){
+            p.setPhone(PhoneConverter.convertToPhoneEntity(person.getPhone(), p));
+        }
+        if (person.getAddress() != null){
+            p.setAddress(AddressConverter.convertToAddressEntity(person.getAddress(), p));
+        }
+
+        return p;
     }
 }

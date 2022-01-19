@@ -1,13 +1,11 @@
 package com.example.demo.services;
 
-import com.example.demo.models.Document;
-import com.example.demo.models.DocumentEntity;
-import com.example.demo.models.Person;
-import com.example.demo.models.PersonEntity;
 import com.example.demo.models.exceptions.DuplicatePersonException;
 import com.example.demo.models.exceptions.IllegalAgeException;
 import com.example.demo.repositories.PersonsRepository;
+import com.example.demo.services.interfaces.AddressService;
 import com.example.demo.services.interfaces.PersonsService;
+import com.example.demo.services.interfaces.PhoneService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,12 +23,16 @@ class PersonsServiceImplTest {
 
     private final Long USER_ID = 1L;
     private PersonsService personsService;
+    private PhoneService phoneService;
+    private AddressService addressService;
     private PersonsRepository personsRepository;
 
     @BeforeEach
     void setUp(){
+        phoneService = mock(PhoneService.class);
+        addressService = mock(AddressService.class);
         personsRepository = mock(PersonsRepository.class);
-        personsService = new PersonsServiceImpl(personsRepository);
+        personsService = new PersonsServiceImpl(personsRepository, phoneService, addressService);
     }
 
     @Test
