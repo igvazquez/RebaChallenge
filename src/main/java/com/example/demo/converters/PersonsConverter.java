@@ -33,9 +33,11 @@ public final class PersonsConverter {
         var p = PersonEntity.builder()
                 .id(person.getId())
                 .name(person.getName())
-                .birthdate(LocalDateTime.parse(person.getBirthdate()))
                 .build();
 
+        if (person.getBirthdate() != null){
+            p.setBirthdate(LocalDateTime.parse(person.getBirthdate()));
+        }
         if(person.getDocument() != null){
             p.setDocument(DocumentConverter.convertToDocumentEntity(person.getDocument(), p));
         }

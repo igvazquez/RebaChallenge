@@ -104,7 +104,7 @@ public class PersonsServiceImpl implements PersonsService {
     }
 
     private boolean isValidAge(final PersonEntity person) {
-        return ChronoUnit.YEARS.between(person.getBirthdate(), LocalDateTime.now()) >= LEGAL_AGE;
+        return person.getBirthdate() != null && ChronoUnit.YEARS.between(person.getBirthdate(), LocalDateTime.now()) >= LEGAL_AGE;
     }
 
     @Override
