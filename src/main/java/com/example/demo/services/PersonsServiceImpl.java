@@ -1,10 +1,7 @@
 package com.example.demo.services;
 
 import com.example.demo.models.PersonEntity;
-import com.example.demo.models.exceptions.DuplicatePersonException;
-import com.example.demo.models.exceptions.IllegalAgeException;
-import com.example.demo.models.exceptions.NoContactInfoException;
-import com.example.demo.models.exceptions.PersonNotExistsException;
+import com.example.demo.models.exceptions.*;
 import com.example.demo.repositories.PersonsRepository;
 import com.example.demo.services.interfaces.AddressService;
 import com.example.demo.services.interfaces.PersonsService;
@@ -84,7 +81,11 @@ public class PersonsServiceImpl implements PersonsService {
             throw new IllegalAgeException("User must be over " + LEGAL_AGE + " years old");
         }
 
-        if (personExists(person)){
+        if (person.getDocument() == null){
+            throw new DocumentMissingException();
+        }
+
+        if (personExists(person)) {
             throw new DuplicatePersonException(person);
         }
 

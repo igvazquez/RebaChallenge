@@ -12,16 +12,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ExceptionHandlerControllerAdvice extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler({ DuplicatePersonException.class })
-    public ResponseEntity<Object> handleDuplicatePerson(DuplicatePersonException ex, WebRequest request) {
-        ApiError apiError = new ApiError(
-                HttpStatus.BAD_REQUEST, ex.getLocalizedMessage());
-        return new ResponseEntity<>(
-                apiError, new HttpHeaders(), apiError.getStatus());
-    }
-
-    @ExceptionHandler({ IllegalAgeException.class })
-    public ResponseEntity<Object> handleIllegalAge(IllegalAgeException ex, WebRequest request) {
+    @ExceptionHandler({ DuplicatePersonException.class, IllegalAgeException.class,
+            NoContactInfoException.class, DocumentMissingException.class})
+    public ResponseEntity<Object> handlePostBadRequest(RuntimeException ex, WebRequest request) {
         ApiError apiError = new ApiError(
                 HttpStatus.BAD_REQUEST, ex.getLocalizedMessage());
         return new ResponseEntity<>(
@@ -29,7 +22,7 @@ public class ExceptionHandlerControllerAdvice extends ResponseEntityExceptionHan
     }
 
     @ExceptionHandler({ IllegalRelationship.class })
-    public ResponseEntity<Object> handleIllegalAge(IllegalRelationship ex, WebRequest request) {
+    public ResponseEntity<Object> handleIllegalRelationShip(IllegalRelationship ex, WebRequest request) {
         ApiError apiError = new ApiError(
                 HttpStatus.BAD_REQUEST, ex.getLocalizedMessage());
         return new ResponseEntity<>(
@@ -37,17 +30,9 @@ public class ExceptionHandlerControllerAdvice extends ResponseEntityExceptionHan
     }
 
     @ExceptionHandler({ PersonNotExistsException.class })
-    public ResponseEntity<Object> handleIllegalAge(PersonNotExistsException ex, WebRequest request) {
+    public ResponseEntity<Object> handlePersonNotExists(PersonNotExistsException ex, WebRequest request) {
         ApiError apiError = new ApiError(
                 HttpStatus.NOT_FOUND, ex.getLocalizedMessage());
-        return new ResponseEntity<>(
-                apiError, new HttpHeaders(), apiError.getStatus());
-    }
-
-    @ExceptionHandler({ NoContactInfoException.class })
-    public ResponseEntity<Object> handleNoContactInfo(NoContactInfoException ex, WebRequest request) {
-        ApiError apiError = new ApiError(
-                HttpStatus.BAD_REQUEST, ex.getLocalizedMessage());
         return new ResponseEntity<>(
                 apiError, new HttpHeaders(), apiError.getStatus());
     }

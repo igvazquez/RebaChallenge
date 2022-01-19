@@ -36,7 +36,9 @@ public final class PersonsConverter {
                 .birthdate(LocalDateTime.parse(person.getBirthdate()))
                 .build();
 
-        p.setDocument(DocumentConverter.convertToDocumentEntity(person.getDocument(), p));
+        if(person.getDocument() != null){
+            p.setDocument(DocumentConverter.convertToDocumentEntity(person.getDocument(), p));
+        }
 
         if (person.getPhone() != null){
             p.setPhone(PhoneConverter.convertToPhoneEntity(person.getPhone(), p));
