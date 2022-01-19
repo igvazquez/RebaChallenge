@@ -38,4 +38,6 @@ Podemos oberservar que al realizar 500 GETS por segundo al endpoint de /personas
 Algunas mejoras que se pueden realizar al proyecto:
 - Agregar tests de unidad que cubran una mayor parte de la app y casos border.
 - Al realizar POST a /personas, se deberia devolver la entidad con el ID, aunque no es algo trivial de realizar (ya que el ID se genera luego de realizar el flush y springdata abstrae bastante las transacciones), es algo posible y brinda una mejor experiencia.
-- Permitir mayor flexibilidad a la hora de ingresar fechas. Al usar LocalDateTime, se debe ingresar las fechas con un formato similar a "2020-04-19T00:00" lo cual hace que sea poco practico
+- Permitir mayor flexibilidad a la hora de ingresar fechas. Al usar LocalDateTime, se debe ingresar las fechas con un formato similar a "2020-04-19T00:00" lo cual hace que sea poco practico.
+- Mejor manejo de errores de DB, por ej, a la hora de hacer POST a profile, si el phone o address ya existen se tira un 500.
+- Completar la API con metodos faltantes, por ejemplo, PUT a /phones/{phoneId} o a /personas/{personId}/phone. Idem para address.
