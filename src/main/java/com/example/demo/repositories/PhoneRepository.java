@@ -1,6 +1,5 @@
 package com.example.demo.repositories;
 
-import com.example.demo.models.DocumentEntity;
 import com.example.demo.models.PhoneEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

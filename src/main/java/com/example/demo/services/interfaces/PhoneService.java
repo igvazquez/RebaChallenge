@@ -1,9 +1,7 @@
 package com.example.demo.services.interfaces;
 
 import com.example.demo.models.PersonEntity;
-import com.example.demo.models.Phone;
 import com.example.demo.models.PhoneEntity;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;

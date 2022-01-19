@@ -1,9 +1,7 @@
 package com.example.demo.controllers;
 
 import com.example.demo.api.StatsApi;
-import com.example.demo.models.CountryStats;
 import com.example.demo.models.CountryStatsDTO;
-import com.example.demo.services.interfaces.PersonsService;
 import com.example.demo.services.interfaces.StatsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

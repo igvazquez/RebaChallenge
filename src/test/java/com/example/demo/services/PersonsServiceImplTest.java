@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import static com.example.demo.TestData.getFakePersonEntity;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static com.example.demo.TestData.getFakePersonEntity;
 
 class PersonsServiceImplTest {
 

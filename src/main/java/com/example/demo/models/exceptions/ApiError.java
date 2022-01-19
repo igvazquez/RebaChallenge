@@ -3,8 +3,6 @@ package com.example.demo.models.exceptions;
 import lombok.Value;
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
-
 @Value
 public class ApiError {
 
