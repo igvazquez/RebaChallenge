@@ -43,4 +43,12 @@ public class ExceptionHandlerControllerAdvice extends ResponseEntityExceptionHan
         return new ResponseEntity<>(
                 apiError, new HttpHeaders(), apiError.getStatus());
     }
+
+    @ExceptionHandler({ NoContactInfoException.class })
+    public ResponseEntity<Object> handleNoContactInfo(NoContactInfoException ex, WebRequest request) {
+        ApiError apiError = new ApiError(
+                HttpStatus.BAD_REQUEST, ex.getLocalizedMessage());
+        return new ResponseEntity<>(
+                apiError, new HttpHeaders(), apiError.getStatus());
+    }
 }

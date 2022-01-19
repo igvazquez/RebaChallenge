@@ -1,13 +1,13 @@
 package com.example.demo.controllers;
 
 import com.example.demo.api.PersonsApi;
+import com.example.demo.converters.AddressConverter;
 import com.example.demo.converters.DocumentConverter;
 import com.example.demo.converters.PersonsConverter;
+import com.example.demo.converters.PhoneConverter;
 import com.example.demo.models.*;
 import com.example.demo.models.exceptions.PersonNotExistsException;
-import com.example.demo.services.interfaces.DocumentService;
-import com.example.demo.services.interfaces.PersonsService;
-import com.example.demo.services.interfaces.RelationshipService;
+import com.example.demo.services.interfaces.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +23,8 @@ public class PersonsController implements PersonsApi {
 
     private final PersonsService personsService;
     private final DocumentService documentService;
+    private final PhoneService phoneService;
+    private final AddressService addressService;
     private final RelationshipService relationshipService;
 
     @Override
@@ -37,7 +39,7 @@ public class PersonsController implements PersonsApi {
     public ResponseEntity<Person> postPerson(final Person body) {
         var person = personsService.postPerson(PersonsConverter.convertToEntity(body));
 
-        return ResponseEntity.created(URI.create("/persons/" + person.getId())).body(body);
+        return ResponseEntity.created(URI.create("/personas/" + person.getId())).body(body);
     }
 
     @Override
@@ -113,5 +115,25 @@ public class PersonsController implements PersonsApi {
                 .relation(rel.getRelation());
 
         return ResponseEntity.ok(relation);
+    }
+
+    @Override
+    public ResponseEntity<Address> getAddressByUserId(final Long userId) {
+        var address = addressService.getAddressByUserId(userId)
+                .map(AddressConverter::convertToAddressDto);
+
+        return address
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @Override
+    public ResponseEntity<Phone> getPhoneByUserId(final Long userId) {
+        var phone = phoneService.getPhoneByUserId(userId)
+                .map(PhoneConverter::convertToPhoneDto);
+
+        return phone
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

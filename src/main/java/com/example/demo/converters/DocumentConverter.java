@@ -2,6 +2,7 @@ package com.example.demo.converters;
 
 import com.example.demo.models.Document;
 import com.example.demo.models.DocumentEntity;
+import com.example.demo.models.PersonEntity;
 
 public final class DocumentConverter {
 
@@ -18,12 +19,13 @@ public final class DocumentConverter {
                 .residenceCountry(document.getResidenceCountry());
     }
 
-    public static DocumentEntity convertToDocumentEntity(final Document document) {
+    public static DocumentEntity convertToDocumentEntity(final Document document, final PersonEntity person) {
         return DocumentEntity.builder()
                 .id(document.getId())
                 .type(document.getType())
                 .document(document.getDocument())
                 .residenceCountry(document.getResidenceCountry())
+                .person(person)
                 .build();
     }
 }

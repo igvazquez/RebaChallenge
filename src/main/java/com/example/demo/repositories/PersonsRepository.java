@@ -14,7 +14,7 @@ public interface PersonsRepository extends CrudRepository<PersonEntity, Long> {
 
     List<PersonEntity> findAll();
 
-    @Query(value = "SELECT * FROM persons p INNER JOIN documents d ON d.document_id = p.document_id " +
+    @Query(value = "SELECT * FROM persons p INNER JOIN documents d ON d.person_id = p.person_id " +
                     "LEFT OUTER JOIN parents p2 ON p.person_id = p2.child_id " +
                     "WHERE d.residence_country = :residence_country AND d.type = :type " +
                     "AND d.document = :document",

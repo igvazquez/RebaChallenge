@@ -3,9 +3,12 @@ package com.example.demo.services;
 import com.example.demo.models.PersonEntity;
 import com.example.demo.models.exceptions.DuplicatePersonException;
 import com.example.demo.models.exceptions.IllegalAgeException;
+import com.example.demo.models.exceptions.NoContactInfoException;
 import com.example.demo.models.exceptions.PersonNotExistsException;
 import com.example.demo.repositories.PersonsRepository;
+import com.example.demo.services.interfaces.AddressService;
 import com.example.demo.services.interfaces.PersonsService;
+import com.example.demo.services.interfaces.PhoneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -24,6 +27,8 @@ public class PersonsServiceImpl implements PersonsService {
     private static final int LEGAL_AGE = 18;
 
     private final PersonsRepository personsRepository;
+    private final PhoneService phoneService;
+    private final AddressService addressService;
 
     @Override
     public List<PersonEntity> getAllPersons() {
@@ -56,6 +61,14 @@ public class PersonsServiceImpl implements PersonsService {
             if (person.getBirthdate() != null && isValidAge(person)){
                 oldP.setBirthdate(person.getBirthdate());
             }
+            if (person.getPhone() != null){
+                var phone = phoneService.updatePhone(person.getPhone(), oldP);
+                oldP.setPhone(phone);
+            }
+            if (person.getAddress() != null){
+                var address = addressService.updateAddress(person.getAddress(), oldP);
+                oldP.setAddress(address);
+            }
 
             return personsRepository.save(oldP);
         }).orElseGet(() -> {
@@ -75,7 +88,18 @@ public class PersonsServiceImpl implements PersonsService {
             throw new DuplicatePersonException(person);
         }
 
+        if (!hasContactInfo(person)){
+            throw new NoContactInfoException();
+        }
+
         return personsRepository.save(person);
+    }
+
+    private boolean hasContactInfo(final PersonEntity person) {
+        return (person.getPhone() != null && person.getPhone().getNumber() != null)
+                || (person.getAddress() != null
+                    && person.getAddress().getStreet() != null
+                    && person.getAddress().getNumber() != null);
     }
 
     private boolean isValidAge(final PersonEntity person) {
