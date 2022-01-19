@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AddressRepository extends CrudRepository<AddressEntity, Long> {
@@ -13,4 +14,6 @@ public interface AddressRepository extends CrudRepository<AddressEntity, Long> {
             "on p.person_id = a.person_id where p.person_id = :personId",
             nativeQuery = true)
     Optional<AddressEntity> findAddressByPersonId(@Param("personId")final Long personId);
+
+    List<AddressEntity> findAll();
 }

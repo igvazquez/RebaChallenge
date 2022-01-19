@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class AddressServiceImpl implements AddressService {
@@ -28,5 +31,20 @@ public class AddressServiceImpl implements AddressService {
         }).orElse(address);
 
         return addressRepository.save(addressToSave);
+    }
+
+    @Override
+    public Optional<AddressEntity> getAddressByUserId(final Long userId) {
+        return addressRepository.findById(userId);
+    }
+
+    @Override
+    public Optional<AddressEntity> getAddressById(final Long addressId) {
+        return addressRepository.findById(addressId);
+    }
+
+    @Override
+    public List<AddressEntity> getAllAddresses() {
+        return addressRepository.findAll();
     }
 }

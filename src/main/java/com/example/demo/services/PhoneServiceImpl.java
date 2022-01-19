@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PhoneServiceImpl implements PhoneService {
@@ -26,5 +29,20 @@ public class PhoneServiceImpl implements PhoneService {
         }).orElse(phone);
 
         return phoneRepository.save(phoneToSave);
+    }
+
+    @Override
+    public Optional<PhoneEntity> getPhoneByUserId(final Long userId) {
+        return phoneRepository.findPhoneByPersonId(userId);
+    }
+
+    @Override
+    public Optional<PhoneEntity> getPhoneById(Long phoneId) {
+        return phoneRepository.findById(phoneId);
+    }
+
+    @Override
+    public List<PhoneEntity> getAllPhones() {
+        return phoneRepository.findAll();
     }
 }
