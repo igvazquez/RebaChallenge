@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS phones(
     phone_id    serial primary key ,
     number      varchar(25) not null,
     person_id     integer not null,
-    foreign key (person_id) references phones,
+    foreign key (person_id) references persons,
     unique(number)
 );
 
@@ -36,6 +36,6 @@ CREATE TABLE IF NOT EXISTS addresses(
     number      varchar(50) not null,
     apartment   bool,
     person_id   integer not null,
-    foreign key (person_id) references phones,
+    foreign key (person_id) references persons,
     unique(street, number)
 );

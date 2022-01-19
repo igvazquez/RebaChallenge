@@ -14,8 +14,8 @@ import javax.persistence.*;
 public class DocumentEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "persons_person_id_seq")
-    @SequenceGenerator(allocationSize = 1, sequenceName = "persons_person_id_seq", name = "persons_person_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "documents_document_id_seq")
+    @SequenceGenerator(allocationSize = 1, sequenceName = "documents_document_id_seq", name = "documents_document_id_seq")
     @Column(name = "document_id")
     private Long id;
 
